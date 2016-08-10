@@ -59,3 +59,19 @@ app.post('/todos', function(req, res){
   res.json(body)
 })
 ```
+
+
+//Refactor using UnderScore.js
+//Get TODOS/:id
+``var matchedTodo = _.findWhere(todos, {id: todoId})``
+//refactoring the code with `_.findWhere` finds the first value that matches all of the key-value pairs.
+
+
+//Javascript
+  `` var matchedTodo;
+     todos.forEach(function(todo){
+     if(todoId === todo.id){
+      matchedTodo = todo;
+       }
+    })
+```
