@@ -8,17 +8,19 @@ var PORT = process.env.PORT || 3000;
 var middlewear = require('./middlewear');
 
 var todos = [
-  {
-    id: 1,
-    description: 'Teach REST API',
-    completed: false
-  },
-  {
-    id: 2,
-    description: 'Go eat health lunch',
-    completed: true
-  }
+  // {
+  //   id: 1,
+  //   description: 'Teach REST API',
+  //   completed: false
+  // },
+  // {
+  //   id: 2,
+  //   description: 'Go eat health lunch',
+  //   completed: true
+  // }
 ]
+
+var todoNextId = 1;
 
 //this middlewear is now for the whole app!
 app.use(middlewear.requireAuthentication);
@@ -47,6 +49,17 @@ app.get('/todos/:id', function(req, res){
   }else{
     res.status(404).send();
   }
+})
+
+app.post('/todos', function(req, res){
+  var body = req.body;
+  //add id field
+  body.id = todoNextId;
+  todoNextId++;
+  //push the body into array
+  //we just parsed
+  todos.push(body)
+  res.json(body)
 })
 
 
