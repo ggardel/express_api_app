@@ -11,3 +11,6 @@ app.get('/about', middlewear.logger, function(req, res){
 })
 ```
 //this was a custom middlewear called after the root route and before the function ...
+
+
+//moving the middlewear to his own file .js after make sure it was working. now we have to module.exports the middlewear and also require it at the server.js (best practice)

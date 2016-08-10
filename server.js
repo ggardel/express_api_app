@@ -2,21 +2,10 @@ var express = require('express');
 //creating express app
 var app = express();
 var path = require('path');
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
+var middlewear = require('./middlewear');
 
 
-//Custom Middlewear
-var middlewear = {
-  requireAuthentication: function(req, res, next){
-    console.log('Request Auth Ran.');
-    next();
-  },
-  logger: function(req, res, next){
-    console.log(req.method + req.originalUrl + new Date().toString());
-    next();
-  }
-
-}
 //this middlewear is now for the whole app!
 app.use(middlewear.requireAuthentication);
 
@@ -29,5 +18,5 @@ app.get('/about', middlewear.logger, function(req, res){
 })
 
 app.listen(PORT,function(){
-  console.log('listening on PORT' )
+  console.log('listening on PORT ' + PORT);
 })
