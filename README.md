@@ -75,3 +75,57 @@ app.post('/todos', function(req, res){
        }
     })
 ```
+
+//POST
+
+//Javascript
+//var body = req.body;//
+
+```app.post('/todos', function(req, res){
+//refactoring with  _.pick
+  var body = _.pick(req.body, 'description', 'completed');
+  //var body = req.body;/////
+
+  //_.isBoolean  &  _.isString are Object functions that allows us to validate
+  //We have the body object through  body-parser.
+  ```
+
+  //with `_.undescore`
+  ```
+  if(!_.isBoolean(body.completed) || !_.isString(body.description) ||
+    body.description.trim().length === 0){
+      return res.status(400).send();
+    }
+     body.description = body.description.trim();
+  body.id = todoNextId;
+  todoNextId++;
+  todos.push(body)
+  res.json(body)
+})
+```
+
+//Created delete /todos/:id
+
+//finding the the object by Id with `_.findWhere` and deleting with the `_.without` the array todos with the values from matchedTodo
+```
+_.without(array, *values)
+Returns a copy of the array with all instances of the values removed.
+
+_.without([1, 2, 1, 0, 3, 1, 4], 0, 1);
+=> [2, 3, 4]
+```
+//applied
+
+```
+app.delete('/todos/:id', function(req,res){
+  var body =  parseInt(req.params.id);
+  var matchedTodo = _.findWhere(todos, {id: todoId});
+  //if reverse, not match todoId
+  if(!matchedTodo){
+    res.status(404).json({"error": "No Todo found."});
+  }else{
+    todos = _.without(todos, matchedTodo);
+  }
+  res.json(matchedTodo);
+})
+```
